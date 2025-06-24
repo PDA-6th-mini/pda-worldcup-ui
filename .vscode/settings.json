@@ -1,5 +1,9 @@
 {
-  "prettier.configPath": ".prettierrc",
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+	"prettier.configPath": ".prettierrc",
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "always",
+		"source.fixAll.stylelint": "always"
+	}
 }
