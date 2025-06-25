@@ -5,36 +5,51 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { ListCard } from '@/components/MainPageCard';
 
 type Card = {
-	id: string;
+	id: number;
 	title: string;
-	imgUri: string;
+	description: string | null;
+	thumbNail_1: string;
+	thumbNail_2: string;
 };
 
-const mockProblems: Card[] = [
+const mockProblems = [
 	{
-		id: '1',
-		title: 'React 기초',
-		imgUri: 'https://via.placeholder.com/300x180?text=React',
+		problem_id: 1,
+		name: '문제 A',
+		description: null,
+		images: [
+			{
+				img_id: 3,
+				img_url: 'a3.jpg',
+			},
+			{
+				img_id: 1,
+				img_url: 'a1.jpg',
+			},
+			{
+				img_id: 2,
+				img_url: 'a2.jpg',
+			},
+		],
 	},
 	{
-		id: '2',
-		title: 'JavaScript 비동기',
-		imgUri: 'https://via.placeholder.com/300x180?text=JS+Async',
-	},
-	{
-		id: '3',
-		title: '자료구조: 트리',
-		imgUri: 'https://via.placeholder.com/300x180?text=Tree',
-	},
-	{
-		id: '4',
-		title: '알고리즘 기초',
-		imgUri: 'https://via.placeholder.com/300x180?text=Algorithm',
-	},
-	{
-		id: '5',
-		title: 'CSS 레이아웃',
-		imgUri: 'https://via.placeholder.com/300x180?text=CSS',
+		problem_id: 2,
+		name: '문제 B',
+		description: '이런거 나 조하애',
+		images: [
+			{
+				img_id: 4,
+				img_url: 'b1.jpg',
+			},
+			{
+				img_id: 5,
+				img_url: 'b2.jpg',
+			},
+			{
+				img_id: 6,
+				img_url: 'b3.jpg',
+			},
+		],
 	},
 ];
 
@@ -42,18 +57,21 @@ export const MainPageContainer = () => {
 	const [problems, setProblems] = useState<Card[]>([]);
 
 	useEffect(() => {
-		setProblems(mockProblems);
+		const parsed: Card[] = mockProblems.map((problem) => {
+			const images = problem.images;
+
+			const data: Card = {
+				id: problem.problem_id,
+				title: problem.name,
+				description: problem.description,
+				thumbNail_1: images[0].img_url,
+				thumbNail_2: images[1].img_url,
+			};
+
+			return data;
+		});
+		setProblems(parsed);
 	}, []);
-
-	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		const response = await fetch('http://localhost:5000/main');
-	// 		const data = await response.json();
-
-	// 		setProblems(data);
-	// 	};
-	// 	getData();
-	// }, []);
 
 	return (
 		<Container className="my-4">
@@ -63,7 +81,9 @@ export const MainPageContainer = () => {
 						<ListCard
 							id={problem.id}
 							title={problem.title}
-							imgUri={problem.imgUri}
+							description={problem.description}
+							thumbNail_1={problem.thumbNail_1}
+							thumbNail_2={problem.thumbNail_2}
 						/>
 					</Col>
 				))}
