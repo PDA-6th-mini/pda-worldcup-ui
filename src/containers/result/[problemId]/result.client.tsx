@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+
+import Image from 'next/image';
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 import { useSearchParams } from 'next/navigation';
 import { Img } from '@/types/api/img';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 // props 타입 정의
 interface ResultContainerProps {
 	problemId: number;
@@ -81,7 +83,7 @@ export default function ResultClientContainer({
 			try {
 				console.log('요청 problemId:', problemId);
 				const res = await fetch(
-					`http://localhost:3000/api/result-ratio/${problemId}`
+					`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
 				);
 				const json = await res.json();
 				const problemName = json.data.problem_name;
@@ -99,7 +101,7 @@ export default function ResultClientContainer({
 		};
 
 		fetchRatioData();
-	}, []);
+	}, [problemId]);
 
 	// 2. 결과 이미지 가져오기
 	useEffect(() => {
