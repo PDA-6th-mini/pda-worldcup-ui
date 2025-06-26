@@ -1,12 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import { Container, Row, Col } from 'react-bootstrap';
-import Denque from 'denque';
 import { useRef, useEffect, useState } from 'react';
+
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+import Denque from 'denque';
+import { Container, Row, Col } from 'react-bootstrap';
+
 import { Img } from '@/types/api/img';
 import { Problem } from '@/types/api/problem';
-import { useRouter } from 'next/navigation';
 
 export default function MatchViewClient({
 	fetchData,
@@ -28,7 +31,7 @@ export default function MatchViewClient({
 		});
 		setImage1(queue.current.shift());
 		setImage2(queue.current.shift());
-	}, []);
+	}, [fetchData]);
 
 	useEffect(() => {
 		if (match == 15) {
@@ -43,7 +46,7 @@ export default function MatchViewClient({
 		if (match >= 14) setRound('결승');
 		else if (match >= 12) setRound('4강');
 		else if (match >= 8) setRound('8강');
-	}, [match]);
+	}, [match, router]);
 
 	const clickImg = (rl: boolean) => {
 		if (!image1 || !image2 || selected) return;
