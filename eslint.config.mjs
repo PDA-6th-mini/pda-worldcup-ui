@@ -30,6 +30,12 @@ const eslintConfig = [
 	{
 		rules: {
 			'react/react-in-jsx-scope': 'off',
+			'prettier/prettier': [
+				'error',
+				{
+					endOfLine: 'auto',
+				},
+			],
 			'import/order': [
 				'error',
 				{
@@ -67,6 +73,7 @@ const eslintConfig = [
 					},
 				},
 			],
+			'import/no-unresolved': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',
 		},
 	},

@@ -1,15 +1,14 @@
 'use client';
 
-import { FC, forwardRef, useCallback } from 'react';
-import { Container } from 'react-bootstrap';
+import { FC, useCallback } from 'react';
+
 import { useDropzone } from 'react-dropzone';
 
 interface Props {
-	selectedFiles: File[] | null;
 	handleFiles: (files: File[]) => void;
 }
 
-export const Dropzone: FC<Props> = ({ selectedFiles, handleFiles }) => {
+export const Dropzone: FC<Props> = ({ handleFiles }) => {
 	const onDrop = useCallback(
 		(acceptedFiles: File[]) => {
 			handleFiles(acceptedFiles);

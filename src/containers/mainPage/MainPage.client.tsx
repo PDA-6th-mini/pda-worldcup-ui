@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import { Container, Row, Col } from 'react-bootstrap';
+
 import { ListCard } from '@/components/MainPageCard';
 
 type Card = {

@@ -1,7 +1,9 @@
 'use client';
 
-import { Card, Button, ButtonGroup } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
+
+import { Card, Button, ButtonGroup } from 'react-bootstrap';
+
 import { useToast } from '@/hooks/useToast';
 
 type Card = {
@@ -35,6 +37,7 @@ export const ListCard = ({
 			);
 			return;
 		} catch (err) {
+			console.error('링크 복사를 실패했습니다.', err);
 			handleShowToast('실패!', '링크 복사를 실패했습니다!😹', 'danger');
 		}
 	};
