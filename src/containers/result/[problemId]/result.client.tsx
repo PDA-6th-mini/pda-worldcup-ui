@@ -5,17 +5,10 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { useSearchParams } from 'next/navigation';
-import { Img } from '@/types/api/img';
-=======
+
 import { Doughnut } from 'react-chartjs-2';
->>>>>>> 7a40dbc (fix: eslint 오류 해결)
-=======
 import { useSearchParams } from 'next/navigation';
 import { Img } from '@/types/api/img';
->>>>>>> 5060926 (결과 이미지 및 이름을 띄우도록 반영)
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -159,18 +152,8 @@ export default function ResultClientContainer({
 			<div style={styles.wrapper}>
 				<div style={styles.imageWrapper}>
 					<div style={styles.imageContainer}>
-<<<<<<< HEAD
-<<<<<<< HEAD
 						<img
 							src={resultImg?.img_url}
-=======
-						<Image
-							src="/images/gaeul1.JPG"
->>>>>>> 7a40dbc (fix: eslint 오류 해결)
-=======
-						<img
-							src={resultImg?.img_url}
->>>>>>> 5060926 (결과 이미지 및 이름을 띄우도록 반영)
 							alt="1등 이미지"
 							style={styles.image}
 						/>
