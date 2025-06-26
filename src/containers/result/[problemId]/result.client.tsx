@@ -105,7 +105,11 @@ export default function ResultClientContainer({
 
 	return (
 		<div>
-			<p>{problemName}</p>
+			{/* 문제 이름 배너 */}
+			<div style={styles.banner}>
+				<h2>{problemName} 우승</h2>
+			</div>
+
 			<div style={styles.wrapper}>
 				<div style={styles.imageWrapper}>
 					<div style={styles.imageContainer}>
@@ -129,6 +133,16 @@ export default function ResultClientContainer({
 const styles: {
 	[key: string]: React.CSSProperties;
 } = {
+	banner: {
+		width: '100%',
+		backgroundColor: '#f5f5f5',
+		textAlign: 'center',
+		padding: '1rem 0',
+		fontSize: '1.8rem',
+		fontWeight: 'bold',
+		boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+		zIndex: 1,
+	},
 	wrapper: {
 		display: 'flex',
 		flexDirection: 'row', // ✅ 좌우 정렬
