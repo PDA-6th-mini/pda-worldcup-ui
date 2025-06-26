@@ -1,7 +1,8 @@
 'use client';
 
-import { ToastType } from '@/types/toast';
 import { Toast as BootstrapToast } from 'react-bootstrap';
+
+import { ToastType } from '@/types/toast';
 
 interface Props {
 	title: string;

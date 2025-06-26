@@ -1,15 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-
-type NavItem = {
-	url: string;
-	title: string;
-};
 
 const navItems = [
 	{
@@ -47,7 +43,7 @@ export default function NavBarClient() {
 							</Offcanvas.Header>
 							<Offcanvas.Body>
 								<Nav className="justify-content-start flex-grow-1 pe-3 ">
-									{navItems.map((item, idx) => {
+									{navItems.map((item) => {
 										return (
 											<Link
 												key={item.url}

@@ -1,18 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+
+import Image from 'next/image';
+
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-// 데이터 타입 정의
-type ResultItem = {
-	img_id: number;
-	img_name: string;
-	win_count: number;
-	win_ratio_percent: string;
-};
 
 // props 타입 정의
 interface ResultContainerProps {
@@ -101,7 +96,7 @@ export default function ResultClientContainer({
 		};
 
 		fetchRatioData();
-	}, []);
+	}, [problemId]);
 
 	return (
 		<div>
@@ -113,7 +108,7 @@ export default function ResultClientContainer({
 			<div style={styles.wrapper}>
 				<div style={styles.imageWrapper}>
 					<div style={styles.imageContainer}>
-						<img
+						<Image
 							src="/images/gaeul1.JPG"
 							alt="1등 이미지"
 							style={styles.image}
