@@ -5,13 +5,21 @@ import { Dropzone } from '../Dropzone';
 import { useCallback, useRef } from 'react';
 import { useToast } from '@/hooks/useToast';
 import { checkImageDuplicate } from '@/utils/image';
+import { useRouter } from 'next/navigation';
+import { Response } from '@/types/response';
 
 interface Props {
 	files: File[];
 	onChangeFiles: (files: File[]) => void;
+	fetchProblem: (formData: FormData) => Promise<Response<string>>;
 }
 
-export const ProblemCreateForm = ({ files, onChangeFiles }: Props) => {
+export const ProblemCreateForm = ({
+	files,
+	onChangeFiles,
+	fetchProblem,
+}: Props) => {
+	const router = useRouter();
 	const { handleShowToast } = useToast();
 	const titleRef = useRef<HTMLInputElement>(null);
 	const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -31,7 +39,7 @@ export const ProblemCreateForm = ({ files, onChangeFiles }: Props) => {
 		[files]
 	);
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!titleRef.current || !descriptionRef.current) {
 			return;
@@ -62,6 +70,14 @@ export const ProblemCreateForm = ({ files, onChangeFiles }: Props) => {
 
 		formData.append('title', title);
 		formData.append('description', description);
+		try {
+			const { status } = await fetchProblem(formData);
+			if (status === 200) {
+				router.push('/mainPage');
+			}
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	return (
