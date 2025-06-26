@@ -73,7 +73,7 @@ export const ProblemCreateForm = ({
 		try {
 			const { status } = await fetchProblem(formData);
 			if (status === 200) {
-				router.push('/mainPage');
+				router.push('/');
 			}
 		} catch (e) {
 			console.error(e);
