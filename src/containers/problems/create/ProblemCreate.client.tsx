@@ -2,6 +2,7 @@
 
 import { ProblemCreateForm } from '@/components/ProblemCreateForm';
 import Table from '@/components/Table';
+import createProblem from '@/services/problem';
 import { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -25,6 +26,7 @@ export const ProblemCreateClient = () => {
 						<ProblemCreateForm
 							files={files}
 							onChangeFiles={handleChangeFiles}
+							fetchProblem={createProblem}
 						/>
 					</Col>
 					<Col md={6}>
