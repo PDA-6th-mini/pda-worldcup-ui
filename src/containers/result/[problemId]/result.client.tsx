@@ -62,9 +62,10 @@ export default function ResultClientContainer({
 }: ResultContainerProps) {
 	const [data, setData] = useState([]); // 각 우승횟수 저장된 배열
 	const [names, setNames] = useState([]); // 이미지 이름 저장된 배열
+	const [problemName, setProblemName] = useState(''); // 현재 문제 이름
 
 	const doughnutData = {
-		labes: names, // 각 이미지 이름 배열
+		labels: names, // 각 이미지 이름 배열
 		datasets: [
 			{
 				label: 'ProblemName',
@@ -84,11 +85,16 @@ export default function ResultClientContainer({
 					`http://localhost:3000/api/result-ratio/${problemId}`
 				);
 				const json = await res.json();
-				const cntArray = json.data.map((item: any) => item.cnt);
-				const nameArray = json.data.map((item: any) => item.img_name);
+
+				const problemName = json.data.problem_name;
+				const resultArray = json.data.result;
+
+				const cntArray = resultArray.map((item: any) => item.cnt);
+				const nameArray = resultArray.map((item: any) => item.img_name);
+
+				setProblemName(problemName); // ✅ 추가
 				setData(cntArray);
 				setNames(nameArray);
-				console.log('응답 결과:', json);
 			} catch (err) {
 				console.error('도넛 차트 데이터를 불러오는 데 실패했습니다.', err);
 			}
@@ -99,8 +105,82 @@ export default function ResultClientContainer({
 
 	return (
 		<div>
-			<p>결과이미지자리</p>
-			<Doughnut data={doughnutData} />
+			{/* 문제 이름 배너 */}
+			<div style={styles.banner}>
+				<h2>{problemName} 우승</h2>
+			</div>
+
+			<div style={styles.wrapper}>
+				<div style={styles.imageWrapper}>
+					<div style={styles.imageContainer}>
+						<img
+							src="/images/gaeul1.JPG"
+							alt="1등 이미지"
+							style={styles.image}
+						/>
+						<div style={styles.overlayText}>아이브 가을</div>
+					</div>
+				</div>
+
+				<div style={styles.chartWrapper}>
+					<Doughnut data={doughnutData} />
+				</div>
+			</div>
 		</div>
 	);
 }
+
+const styles: {
+	[key: string]: React.CSSProperties;
+} = {
+	banner: {
+		width: '100%',
+		backgroundColor: '#f5f5f5',
+		textAlign: 'center',
+		padding: '1rem 0',
+		fontSize: '1.8rem',
+		fontWeight: 'bold',
+		boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+		zIndex: 1,
+	},
+	wrapper: {
+		display: 'flex',
+		flexDirection: 'row', // ✅ 좌우 정렬
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: '100%',
+		padding: '3vh',
+		gap: '5vw', // 이미지와 차트 간격
+		flexWrap: 'wrap', // 화면 줄어들면 아래로 줄바꿈
+	},
+	imageWrapper: {
+		width: '40vw',
+		maxWidth: '450px',
+	},
+	imageContainer: {
+		position: 'relative',
+		width: '100%', // imageWrapper 안에서 꽉 채움
+	},
+	image: {
+		width: '100%',
+		height: 'auto',
+		borderRadius: '12px',
+		objectFit: 'cover',
+	},
+	overlayText: {
+		position: 'absolute',
+		top: '85%',
+		left: '50%',
+		transform: 'translateX(-50%)',
+		color: 'white',
+		fontSize: '1.5rem',
+		fontWeight: 'bold',
+		textShadow: '1px 1px 3px rgba(0,0,0,0.7)',
+		pointerEvents: 'none',
+	},
+	chartWrapper: {
+		width: '40vw',
+		maxWidth: '500px',
+		aspectRatio: '1 / 1',
+	},
+};
