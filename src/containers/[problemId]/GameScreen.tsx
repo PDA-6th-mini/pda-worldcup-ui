@@ -15,7 +15,7 @@ export default async function GameScreenContainer({
 
 	return (
 		<div className="bg-black w-100 min-vh-100 d-flex align-items-center justify-content-center">
-			<Container className="bg-black text-white d-flex flex-column align-items-center justify-content-start pt-4 m-0 p-0">
+			<Container className="bg-black text-white d-flex flex-column align-items-center justify-content-start pt-4 m-0 p-0 pb-5">
 				{/* 상단 타이틀 */}
 				<Row className="text-center mb-4">
 					<Col>
