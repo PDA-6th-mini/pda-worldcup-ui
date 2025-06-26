@@ -101,6 +101,7 @@ export default function MatchViewClient({
 								className="shadow"
 							/>
 						</div>
+						<br />
 						<div
 							className={`match-text mt-2 fs-5 fw-semibold ${
 								selected === 'left' ? 'selected' : ''
@@ -133,6 +134,7 @@ export default function MatchViewClient({
 								className="shadow"
 							/>
 						</div>
+						<br />
 						<div
 							className={`match-text mt-2 fs-5 fw-semibold ${
 								selected === 'right' ? 'selected' : ''
