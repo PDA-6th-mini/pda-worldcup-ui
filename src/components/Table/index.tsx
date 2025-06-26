@@ -1,11 +1,12 @@
 import { Table as BootstrapTable } from 'react-bootstrap';
-import Image from 'next/image';
+import { TableRow } from './TableRow';
 
 interface Props {
 	files: File[];
+	onDelete: (file: File) => void;
 }
 
-export const Table = ({ files }: Props) => {
+export const Table = ({ files, onDelete }: Props) => {
 	return (
 		<BootstrapTable striped bordered hover>
 			<thead>
@@ -17,18 +18,7 @@ export const Table = ({ files }: Props) => {
 			</thead>
 			<tbody>
 				{files.map((file) => (
-					<tr key={file.name}>
-						<td>{file.name.split('.')[0]}</td>
-						<td>
-							<Image
-								src={URL.createObjectURL(file)}
-								alt={file.name}
-								width={200}
-								height={260}
-							/>
-						</td>
-						<td style={{ width: '24px', textAlign: 'center' }}>x</td>
-					</tr>
+					<TableRow key={file.name} file={file} onDelete={onDelete} />
 				))}
 			</tbody>
 		</BootstrapTable>
