@@ -19,7 +19,9 @@ export const MainPageClient = () => {
 
 	useEffect(() => {
 		const getProblemData = async () => {
-			const response = await fetch('http://localhost:3000/api/main');
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/main`
+			);
 			const responseBody = await response.json();
 
 			const parsed: Card[] = responseBody.data.map((problem: any) => {

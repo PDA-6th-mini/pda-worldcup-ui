@@ -77,7 +77,7 @@ export default function ResultClientContainer({
 			try {
 				console.log('요청 problemId:', problemId);
 				const res = await fetch(
-					`http://localhost:3000/api/result-ratio/${problemId}`
+					`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
 				);
 				const json = await res.json();
 
