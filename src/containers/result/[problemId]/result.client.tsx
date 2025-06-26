@@ -7,8 +7,10 @@ import Image from 'next/image';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { useSearchParams } from 'next/navigation';
+import { Img } from '@/types/api/img';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
 // props 타입 정의
 interface ResultContainerProps {
 	problemId: number;
@@ -55,15 +57,19 @@ const borderColor = [
 export default function ResultClientContainer({
 	problemId,
 }: ResultContainerProps) {
-	const [data, setData] = useState([]); // 각 우승횟수 저장된 배열
-	const [names, setNames] = useState([]); // 이미지 이름 저장된 배열
-	const [problemName, setProblemName] = useState(''); // 현재 문제 이름
+	const [data, setData] = useState<number[]>([]);
+	const [names, setNames] = useState<string[]>([]);
+	const [problemName, setProblemName] = useState('');
+	const [resultImg, setResultImg] = useState<Img | null>(null);
+	const searchParams = useSearchParams();
+
+	const imgId = searchParams.get('img_id');
 
 	const doughnutData = {
 		labels: names, // 각 이미지 이름 배열
 		datasets: [
 			{
-				label: 'ProblemName',
+				label: problemName,
 				data: data,
 				backgroundColor: backgroundColor,
 				borderColor: borderColor,
@@ -80,7 +86,6 @@ export default function ResultClientContainer({
 					`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
 				);
 				const json = await res.json();
-
 				const problemName = json.data.problem_name;
 				const resultArray = json.data.result;
 
@@ -98,6 +103,44 @@ export default function ResultClientContainer({
 		fetchRatioData();
 	}, [problemId]);
 
+	// 2. 결과 이미지 가져오기
+	useEffect(() => {
+		const fetchResultImg = async () => {
+			if (!imgId) return;
+			try {
+				const res = await fetch(
+					`http://localhost:3000/api/resultImg?img_id=${imgId}`
+				);
+				const json = await res.json();
+				setResultImg(json.data); // { img_name, img_url }
+				console.log('이미지json', json.data);
+			} catch (err) {
+				console.error('결과 이미지를 불러오는 데 실패했습니다.', err);
+			}
+		};
+
+		fetchResultImg();
+	}, []);
+
+	// 2. 결과 이미지 가져오기
+	useEffect(() => {
+		const fetchResultImg = async () => {
+			if (!imgId) return;
+			try {
+				const res = await fetch(
+					`http://localhost:3000/api/resultImg?img_id=${imgId}`
+				);
+				const json = await res.json();
+				setResultImg(json.data); // { img_name, img_url }
+				console.log('이미지json', json.data);
+			} catch (err) {
+				console.error('결과 이미지를 불러오는 데 실패했습니다.', err);
+			}
+		};
+
+		fetchResultImg();
+	}, []);
+
 	return (
 		<div>
 			{/* 문제 이름 배너 */}
@@ -108,12 +151,14 @@ export default function ResultClientContainer({
 			<div style={styles.wrapper}>
 				<div style={styles.imageWrapper}>
 					<div style={styles.imageContainer}>
-						<Image
-							src="/images/gaeul1.JPG"
+						<img
+							src={resultImg?.img_url}
 							alt="1등 이미지"
 							style={styles.image}
 						/>
-						<div style={styles.overlayText}>아이브 가을</div>
+						<div style={styles.overlayText}>
+							{resultImg?.img_name ?? '결과 이미지'}
+						</div>
 					</div>
 				</div>
 
