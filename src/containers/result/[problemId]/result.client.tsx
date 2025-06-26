@@ -6,11 +6,16 @@ import Image from 'next/image';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useSearchParams } from 'next/navigation';
 import { Img } from '@/types/api/img';
 =======
 import { Doughnut } from 'react-chartjs-2';
 >>>>>>> 7a40dbc (fix: eslint 오류 해결)
+=======
+import { useSearchParams } from 'next/navigation';
+import { Img } from '@/types/api/img';
+>>>>>>> 5060926 (결과 이미지 및 이름을 띄우도록 반영)
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -104,7 +109,26 @@ export default function ResultClientContainer({
 		};
 
 		fetchRatioData();
-	}, [problemId]);
+	}, []);
+
+	// 2. 결과 이미지 가져오기
+	useEffect(() => {
+		const fetchResultImg = async () => {
+			if (!imgId) return;
+			try {
+				const res = await fetch(
+					`http://localhost:3000/api/resultImg?img_id=${imgId}`
+				);
+				const json = await res.json();
+				setResultImg(json.data); // { img_name, img_url }
+				console.log('이미지json', json.data);
+			} catch (err) {
+				console.error('결과 이미지를 불러오는 데 실패했습니다.', err);
+			}
+		};
+
+		fetchResultImg();
+	}, []);
 
 	// 2. 결과 이미지 가져오기
 	useEffect(() => {
@@ -136,12 +160,17 @@ export default function ResultClientContainer({
 				<div style={styles.imageWrapper}>
 					<div style={styles.imageContainer}>
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<img
 							src={resultImg?.img_url}
 =======
 						<Image
 							src="/images/gaeul1.JPG"
 >>>>>>> 7a40dbc (fix: eslint 오류 해결)
+=======
+						<img
+							src={resultImg?.img_url}
+>>>>>>> 5060926 (결과 이미지 및 이름을 띄우도록 반영)
 							alt="1등 이미지"
 							style={styles.image}
 						/>
