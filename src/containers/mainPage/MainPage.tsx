@@ -20,6 +20,8 @@ export const MainPageContainer = () => {
 			const response = await fetch('http://localhost:3000/api/main');
 			const responseBody = await response.json();
 
+			console.log(responseBody);
+
 			const parsed: Card[] = responseBody.data.map((problem: any) => {
 				const images = problem.images;
 
@@ -41,7 +43,7 @@ export const MainPageContainer = () => {
 
 	return (
 		<Container className="my-4">
-			<Row xs={1} md={2} lg={3} className="g-4">
+			<Row xs={1} md={3} lg={4} className="g-4">
 				{problems.map((problem) => (
 					<Col key={problem.id}>
 						<ListCard
