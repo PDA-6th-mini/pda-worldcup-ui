@@ -2,6 +2,7 @@
 
 import { Card, Button, ButtonGroup } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 
 type Card = {
 	id: number;
@@ -19,6 +20,24 @@ export const ListCard = ({
 	thumbNail_2,
 }: Card) => {
 	const router = useRouter();
+	const { handleShowToast } = useToast();
+
+	const shareLink = async (id: number) => {
+		const problemUrl = `${window.location.origin}/${id}`;
+
+		try {
+			await navigator.clipboard.writeText(problemUrl);
+
+			handleShowToast(
+				'성공!',
+				'클립보드에 링크가 복사 되었습니다!😺',
+				'success'
+			);
+			return;
+		} catch (err) {
+			handleShowToast('실패!', '링크 복사를 실패했습니다!😹', 'danger');
+		}
+	};
 
 	return (
 		<Card
@@ -88,7 +107,7 @@ export const ListCard = ({
 					</Button>
 					<Button
 						variant="primary"
-						onClick={() => router.push('')}
+						onClick={() => shareLink(id)}
 						style={{
 							color: '#0077B6',
 							background: 'white',
