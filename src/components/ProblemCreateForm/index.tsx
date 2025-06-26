@@ -1,12 +1,16 @@
 'use client';
 
-import { Button, Form } from 'react-bootstrap';
-import { Dropzone } from '../Dropzone';
 import { useCallback, useRef } from 'react';
-import { useToast } from '@/hooks/useToast';
-import { checkImageDuplicate } from '@/utils/image';
+
 import { useRouter } from 'next/navigation';
+
+import { Button, Form } from 'react-bootstrap';
+
+import { useToast } from '@/hooks/useToast';
 import { Response } from '@/types/response';
+import { checkImageDuplicate } from '@/utils/image';
+
+import { Dropzone } from '../Dropzone';
 
 interface Props {
 	files: File[];
@@ -36,7 +40,7 @@ export const ProblemCreateForm = ({
 			}
 			onChangeFiles(filesInput);
 		},
-		[files]
+		[files, handleShowToast, onChangeFiles]
 	);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -109,7 +113,7 @@ export const ProblemCreateForm = ({
 				/>
 			</Form.Group>
 			<Form.Group>
-				<Dropzone handleFiles={handleFiles} selectedFiles={files} />
+				<Dropzone handleFiles={handleFiles} />
 			</Form.Group>
 			<Button variant="primary" type="submit">
 				다음
