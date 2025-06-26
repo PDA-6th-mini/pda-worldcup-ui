@@ -3,6 +3,7 @@
 import { Card, Button, ButtonGroup } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/useToast';
+import styles from './ListCard.module.css';
 
 type Card = {
 	id: number;
@@ -24,16 +25,13 @@ export const ListCard = ({
 
 	const shareLink = async (id: number) => {
 		const problemUrl = `${window.location.origin}/${id}`;
-
 		try {
 			await navigator.clipboard.writeText(problemUrl);
-
 			handleShowToast(
 				'성공!',
 				'클립보드에 링크가 복사 되었습니다!😺',
 				'success'
 			);
-			return;
 		} catch (err) {
 			handleShowToast('실패!', '링크 복사를 실패했습니다!😹', 'danger');
 		}
@@ -44,75 +42,54 @@ export const ListCard = ({
 			style={{
 				width: '100%',
 				maxWidth: '700px',
-				margin: '0 auto',
-				height: 'auto',
-				marginBottom: '0.5rem',
-				borderRadius: '0px',
+				margin: '0 auto 1rem',
+				borderRadius: '1rem',
+				overflow: 'hidden',
+				boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+				border: 'none',
 			}}
-			className="shadow-sm"
+			className={styles.cardHover}
 		>
 			<div style={{ display: 'flex', width: '100%' }}>
 				<Card.Img
 					variant="top"
 					src={thumbNail_1}
-					alt={`${title} 이미지`}
-					style={{
-						width: '50%',
-						height: 280,
-						objectFit: 'cover',
-						borderRadius: 0,
-					}}
+					alt={`${title} 이미지1`}
+					style={{ width: '50%', height: 280, objectFit: 'cover' }}
 				/>
 				<Card.Img
 					variant="top"
 					src={thumbNail_2}
-					alt={`${title} 이미지`}
-					style={{
-						width: '50%',
-						height: 280,
-						objectFit: 'cover',
-						borderRadius: 0,
-					}}
+					alt={`${title} 이미지2`}
+					style={{ width: '50%', height: 280, objectFit: 'cover' }}
 				/>
 			</div>
-			<Card.Body
-				style={{
-					padding: '0.75rem',
-				}}
-			>
-				<Card.Title style={{ fontSize: '1rem' }}>{title}</Card.Title>
-				<Card.Text style={{ fontSize: '0.85rem' }}>{description}</Card.Text>
-				<ButtonGroup size="sm">
+			<Card.Body style={{ padding: '1rem' }}>
+				<Card.Title style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+					{title}
+				</Card.Title>
+				<Card.Text style={{ fontSize: '0.95rem', color: '#495057' }}>
+					{description}
+				</Card.Text>
+				<ButtonGroup className="w-100 mt-2 d-flex justify-content-between">
 					<Button
-						variant="primary"
+						variant="outline-primary"
 						onClick={() => router.push(`/${id}`)}
-						style={{
-							background: 'white',
-							color: '#03045E',
-							borderColor: '#03045E',
-						}}
+						className={styles.btnHover}
 					>
 						시작하기
 					</Button>
 					<Button
-						variant="primary"
+						variant="outline-primary"
 						onClick={() => router.push('')}
-						style={{
-							backgroundColor: 'white',
-							color: '#023E8A',
-							borderColor: '#023E8A',
-						}}
+						className={styles.btnHover}
 					>
 						랭킹보기
 					</Button>
 					<Button
-						variant="primary"
+						variant="outline-primary"
 						onClick={() => shareLink(id)}
-						style={{
-							color: '#0077B6',
-							background: 'white',
-							borderColor: '#0077B6',
-						}}
+						className={styles.btnHover}
 					>
 						공유하기
 					</Button>
