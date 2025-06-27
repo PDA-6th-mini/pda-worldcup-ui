@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 	title: 'PDA World Cup',
 	description: '프로디지털아카테미 이상형 월드컵',
 	openGraph: {
-		images: `${process.env.NEXT_PUBLIC_BASE_URL}/og_image.jpg`,
+		images: `${process.env.NEXT_PUBLIC_API_URL}/og_image.jpg`,
 	},
 };
 
