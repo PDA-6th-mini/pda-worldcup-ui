@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 
 import { GoogleAnalytics } from '@/components/ga/GoogleAnalytics';
 import Navbar from '@/components/layouts/Navbar';
+import { ToastProvider } from '@/hooks/ToastContext';
 
 import type { Metadata } from 'next';
 
@@ -29,14 +30,16 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
-				<GoogleAnalytics />
-				<Navbar />
-				{children}
-			</body>
-		</html>
+		<ToastProvider>
+			<html lang="en">
+				<body
+					className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				>
+					<GoogleAnalytics />
+					<Navbar />
+					{children}
+				</body>
+			</html>
+		</ToastProvider>
 	);
 }

@@ -1,11 +1,7 @@
-import { ToastProvider } from '@/hooks/ToastContext';
+// import { ToastProvider } from '@/hooks/ToastContext';
 
 import { MainPageClient } from './MainPage.client';
 
 export const MainPageContainer = () => {
-	return (
-		<ToastProvider>
-			<MainPageClient />
-		</ToastProvider>
-	);
+	return <MainPageClient />;
 };
