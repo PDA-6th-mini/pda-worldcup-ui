@@ -1,6 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap';
 
-import MatchView from '@/components/GameScreen';
+import MatchView from '@/components/pages/GameScreen';
 import { fetchData } from '@/services/user-service';
 
 export interface GameScreenContainerProps {

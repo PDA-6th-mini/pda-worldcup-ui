@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { Loading } from '@/components/Loading';
-import { ProblemCreateForm } from '@/components/ProblemCreateForm';
-import Table from '@/components/Table';
+import { ProblemCreateForm } from '@/components/pages/ProblemCreateForm';
+import { Loading } from '@/components/wrapped/Loading';
+import Table from '@/components/wrapped/Table';
 import { useToast } from '@/hooks/useToast';
 import { createProblem } from '@/services/problem';
 

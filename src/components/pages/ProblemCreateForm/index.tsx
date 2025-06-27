@@ -7,7 +7,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useToast } from '@/hooks/useToast';
 import { checkImageDuplicate } from '@/utils/image';
 
-import { Dropzone } from '../Dropzone';
+import { Dropzone } from '../../wrapped/Dropzone';
 
 interface Props {
 	files: File[];
