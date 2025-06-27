@@ -82,10 +82,10 @@ export default function ResultClientContainer({
 	// 1. 결과 저장, 데이터 가져오기
 	useEffect(() => {
 		(async () => {
-			const { status } = await storeImageMeta(imgId);
-			if (status !== 'success') {
-				return;
-			}
+			// const { status } = await storeImageMeta(imgId);
+			// if (status !== 'success') {
+			// 	return;
+			// }
 			const { problemName, cntArray, nameArray } =
 				await fetchRatioData(problemId);
 			setProblemName(problemName);

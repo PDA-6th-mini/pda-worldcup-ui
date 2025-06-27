@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import Denque from 'denque';
 import { Container, Row, Col } from 'react-bootstrap';
-
+import { storeImageMeta } from '@/services/image';
 import { Img } from '@/types/api/img';
 import { Problem } from '@/types/api/problem';
 
@@ -37,6 +37,11 @@ export default function MatchViewClient({
 	useEffect(() => {
 		if (match == 15) {
 			const { img_id, problem_id } = queue.current.shift()!;
+
+			const status = storeImageMeta(img_id.toString());
+			// if (status !== 'success') {
+			// 	return;
+			// }
 			router.replace(`/result/${problem_id}?img_id=${img_id}`);
 		}
 		if (match === 0) return;
