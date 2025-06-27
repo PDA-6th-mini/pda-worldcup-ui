@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { Card, Button, ButtonGroup } from 'react-bootstrap';
 
@@ -23,7 +23,6 @@ export const ListCard = ({
 	thumbNail_1,
 	thumbNail_2,
 }: Card) => {
-	const router = useRouter();
 	const { handleShowToast } = useToast();
 
 	const shareLink = async (id: number) => {
@@ -76,20 +75,16 @@ export const ListCard = ({
 					{description}
 				</Card.Text>
 				<ButtonGroup className="w-100 mt-2 d-flex justify-content-between">
-					<Button
-						variant="outline-primary"
-						onClick={() => router.push(`/${id}`)}
-						className={styles.btnHover}
-					>
-						시작하기
-					</Button>
-					<Button
-						variant="outline-primary"
-						onClick={() => router.push(`/ranking/${id}`)}
-						className={styles.btnHover}
-					>
-						랭킹보기
-					</Button>
+					<Link href={`/problems/${id}`}>
+						<Button variant="outline-primary" className={styles.btnHover}>
+							시작하기
+						</Button>
+					</Link>
+					<Link href={`/ranking/${id}`}>
+						<Button variant="outline-primary" className={styles.btnHover}>
+							랭킹보기
+						</Button>
+					</Link>
 					<Button
 						variant="outline-primary"
 						onClick={() => shareLink(id)}
