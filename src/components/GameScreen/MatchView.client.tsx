@@ -31,6 +31,7 @@ export default function MatchViewClient({
 		});
 		setImage1(queue.current.shift());
 		setImage2(queue.current.shift());
+		console.log(queue);
 	}, [fetchData]);
 
 	useEffect(() => {
@@ -46,6 +47,7 @@ export default function MatchViewClient({
 		if (match >= 14) setRound('결승');
 		else if (match >= 12) setRound('4강');
 		else if (match >= 8) setRound('8강');
+		console.log(queue);
 	}, [match, router]);
 
 	const clickImg = (rl: boolean) => {

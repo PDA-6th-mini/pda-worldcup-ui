@@ -26,7 +26,7 @@ export default function NavBarClient() {
 					<Container fluid>
 						<Navbar.Brand
 							style={{ paddingLeft: '4em', paddingRight: '4em' }}
-							href="#"
+							href="/"
 						>
 							도파민
 						</Navbar.Brand>
