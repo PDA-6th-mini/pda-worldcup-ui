@@ -2,13 +2,32 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import { useMutation } from '@tanstack/react-query';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { Loading } from '@/components/Loading';
 import { ProblemCreateForm } from '@/components/ProblemCreateForm';
 import Table from '@/components/Table';
+import { useToast } from '@/hooks/useToast';
 import createProblem from '@/services/problem';
 
 export const ProblemCreateClient = () => {
+	const router = useRouter();
+	const { handleShowToast } = useToast();
+	const { mutate, isPending } = useMutation({
+		mutationFn: createProblem,
+		onSuccess: (data) => {
+			if (data.status === 200) {
+				handleShowToast('Success', '문제가 생성되었습니다.', 'success');
+				router.replace(`/`);
+			}
+		},
+		onError: () => {
+			handleShowToast('Error', '문제 생성에 실패하였습니다.', 'danger');
+		},
+	});
 	const [files, setFiles] = useState<File[]>([]);
 
 	const handleChangeFiles = (files: File[]) => {
@@ -18,6 +37,14 @@ export const ProblemCreateClient = () => {
 	const handleDelete = (file: File) => {
 		setFiles((prev) => prev.filter((f) => f.name !== file.name));
 	};
+
+	const handleSubmit = (formData: FormData) => {
+		mutate(formData);
+	};
+
+	if (isPending) {
+		return <Loading />;
+	}
 
 	return (
 		<div className="d-flex justify-content-center h-100">
@@ -32,7 +59,7 @@ export const ProblemCreateClient = () => {
 						<ProblemCreateForm
 							files={files}
 							onChangeFiles={handleChangeFiles}
-							fetchProblem={createProblem}
+							onSubmit={handleSubmit}
 						/>
 					</Col>
 					<Col md={6}>

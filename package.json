@@ -13,6 +13,7 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.81.2",
 		"bootstrap": "^5.3.7",
 		"chart.js": "^4.5.0",
 		"denque": "^2.1.0",
@@ -29,6 +30,7 @@
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
 		"@eslint/eslintrc": "^3",
+		"@tanstack/react-query-devtools": "^5.81.2",
 		"@types/gtag.js": "^0.0.20",
 		"@types/node": "^20.17.10",
 		"@types/react": "^19",
