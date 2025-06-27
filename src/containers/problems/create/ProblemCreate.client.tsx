@@ -11,7 +11,7 @@ import { Loading } from '@/components/Loading';
 import { ProblemCreateForm } from '@/components/ProblemCreateForm';
 import Table from '@/components/Table';
 import { useToast } from '@/hooks/useToast';
-import createProblem from '@/services/problem';
+import { createProblem } from '@/services/problem';
 
 export const ProblemCreateClient = () => {
 	const router = useRouter();
