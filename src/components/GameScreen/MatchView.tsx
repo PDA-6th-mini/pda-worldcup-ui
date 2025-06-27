@@ -1,3 +1,4 @@
+import { ToastProvider } from '@/hooks/ToastContext';
 import { Img } from '@/types/api/img';
 import { Problem } from '@/types/api/problem';
 
@@ -8,5 +9,9 @@ export default async function MatchView({
 }: {
 	fetchData: (Img & Problem)[];
 }) {
-	return <MatchViewClient fetchData={fetchData} />;
+	return (
+		<ToastProvider>
+			<MatchViewClient fetchData={fetchData} />;
+		</ToastProvider>
+	);
 }
