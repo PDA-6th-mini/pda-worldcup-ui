@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Card, Button, ButtonGroup } from 'react-bootstrap';
+import { Card, Button, ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 
+import Tooltip from '@/components/wrapped/Tooltip';
 import { useToast } from '@/hooks/useToast';
 
 import styles from './ListCard.module.css';
@@ -53,6 +54,7 @@ export const ListCard = ({
 				border: 'none',
 			}}
 			className={styles.cardHover}
+			onClick={() => router.push(`/problems/${id}`)}
 		>
 			<div style={{ display: 'flex', width: '100%' }}>
 				<Card.Img
@@ -74,36 +76,50 @@ export const ListCard = ({
 				>
 					{title}
 				</Card.Title>
-				<Card.Text
-					style={{
-						fontSize: '0.95rem',
-						color: '#495057',
-						height: '1.5rem',
-						textOverflow: 'ellipsis',
-						overflow: 'hidden',
-						whiteSpace: 'nowrap',
-					}}
+				<OverlayTrigger
+					placement="top-start"
+					overlay={<Tooltip message={description ?? ''} />}
 				>
-					{description}
-				</Card.Text>
+					<Card.Text
+						style={{
+							fontSize: '0.95rem',
+							color: '#495057',
+							height: '1.5rem',
+							textOverflow: 'ellipsis',
+							overflow: 'hidden',
+							whiteSpace: 'nowrap',
+						}}
+					>
+						{description}
+					</Card.Text>
+				</OverlayTrigger>
 				<ButtonGroup className="w-100 mt-2 d-flex justify-content-between">
-					<Button
+					{/* <Button
 						variant="outline-primary"
 						className={styles.btnHover}
-						onClick={() => router.push(`/problems/${id}`)}
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(`/problems/${id}`);
+						}}
 					>
 						시작하기
-					</Button>
+					</Button> */}
 					<Button
 						variant="outline-primary"
 						className={styles.btnHover}
-						onClick={() => router.push(`/ranking/${id}`)}
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(`/ranking/${id}`);
+						}}
 					>
 						랭킹보기
 					</Button>
 					<Button
 						variant="outline-primary"
-						onClick={() => shareLink(id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							shareLink(id);
+						}}
 						className={styles.btnHover}
 					>
 						공유하기
