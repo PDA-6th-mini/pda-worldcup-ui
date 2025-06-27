@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
+import { fetchRatioData } from '@/services/result';
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 // props 타입 정의
 interface ResultContainerProps {
@@ -68,28 +70,13 @@ export const RankingClientContainer = ({ problemId }: ResultContainerProps) => {
 	};
 
 	useEffect(() => {
-		const fetchRatioData = async () => {
-			try {
-				console.log('요청 problemId:', problemId);
-				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
-				);
-				const json = await res.json();
-				const problemName = json.data.problem_name;
-				const resultArray = json.data.result;
-
-				const cntArray = resultArray.map((item: any) => item.cnt);
-				const nameArray = resultArray.map((item: any) => item.img_name);
-
-				setProblemName(problemName); // ✅ 추가
-				setData(cntArray);
-				setNames(nameArray);
-			} catch (err) {
-				console.error('도넛 차트 데이터를 불러오는 데 실패했습니다.', err);
-			}
-		};
-
-		fetchRatioData();
+		(async () => {
+			const { problemName, cntArray, nameArray } =
+				await fetchRatioData(problemId);
+			setProblemName(problemName);
+			setData(cntArray);
+			setNames(nameArray);
+		})();
 	}, [problemId]);
 
 	return (
