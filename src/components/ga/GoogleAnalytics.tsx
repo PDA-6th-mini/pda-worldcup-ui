@@ -2,7 +2,7 @@
 
 import Script from 'next/script';
 
-import { GA_TRACKING_ID } from '@/lib/gtag';
+import { NEXT_PUBLIC_GA_ID } from '@/lib/gtag';
 
 export const GoogleAnalytics = () => {
 	return (
@@ -19,7 +19,7 @@ export const GoogleAnalytics = () => {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', '${GA_TRACKING_ID}', {
+        gtag('config', '${NEXT_PUBLIC_GA_ID}', {
             page_path: window.location.pathname,
         });       
         `,
