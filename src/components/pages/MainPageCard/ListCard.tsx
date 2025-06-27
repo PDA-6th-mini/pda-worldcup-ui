@@ -69,10 +69,21 @@ export const ListCard = ({
 				/>
 			</div>
 			<Card.Body style={{ padding: '1rem' }}>
-				<Card.Title style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+				<Card.Title
+					style={{ fontSize: '1.25rem', fontWeight: 600, height: '3rem' }}
+				>
 					{title}
 				</Card.Title>
-				<Card.Text style={{ fontSize: '0.95rem', color: '#495057' }}>
+				<Card.Text
+					style={{
+						fontSize: '0.95rem',
+						color: '#495057',
+						height: '1.5rem',
+						textOverflow: 'ellipsis',
+						overflow: 'hidden',
+						whiteSpace: 'nowrap',
+					}}
+				>
 					{description}
 				</Card.Text>
 				<ButtonGroup className="w-100 mt-2 d-flex justify-content-between">
