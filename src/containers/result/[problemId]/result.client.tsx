@@ -7,6 +7,8 @@ import { useSearchParams } from 'next/navigation';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
+import { fetchResultImg, storeImageMeta } from '@/services/image';
+import { fetchRatioData } from '@/services/result';
 import { Img } from '@/types/api/img';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -77,63 +79,27 @@ export default function ResultClientContainer({
 		],
 	};
 
+	// 1. 결과 저장, 데이터 가져오기
 	useEffect(() => {
-		const fetchRatioData = async () => {
-			try {
-				console.log('요청 problemId:', problemId);
-				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
-				);
-				const json = await res.json();
-				const problemName = json.data.problem_name;
-				const resultArray = json.data.result;
-
-				const cntArray = resultArray.map((item: any) => item.cnt);
-				const nameArray = resultArray.map((item: any) => item.img_name);
-
-				setProblemName(problemName); // ✅ 추가
-				setData(cntArray);
-				setNames(nameArray);
-			} catch (err) {
-				console.error('도넛 차트 데이터를 불러오는 데 실패했습니다.', err);
+		(async () => {
+			const { status } = await storeImageMeta(imgId);
+			if (status !== 'success') {
+				return;
 			}
-		};
-
-		fetchRatioData();
+			const { problemName, cntArray, nameArray } =
+				await fetchRatioData(problemId);
+			setProblemName(problemName);
+			setData(cntArray);
+			setNames(nameArray);
+		})();
 	}, [problemId]);
 
-	// 2. 결과 이미지 가져오기, 결과 저장
+	// 2. 결과 이미지 가져오기
 	useEffect(() => {
-		const fetchResultImg = async () => {
-			if (!imgId) return;
-			try {
-				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/resultImg?img_id=${imgId}`
-				);
-				const json = await res.json();
-				setResultImg(json.data); // { img_name, img_url }
-				console.log('이미지json', json.data);
-			} catch (err) {
-				console.error('결과 이미지를 불러오는 데 실패했습니다.', err);
-			}
-		};
-
-		const storeImageMeta = async () => {
-			try {
-				await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/resultSave?img_id=${imgId}`,
-					{
-						method: 'POST',
-					}
-				);
-				console.log('✅ 결과 이미지 저장 완료');
-			} catch (error) {
-				console.error('❌ 결과 이미지 저장 실패:', error);
-			}
-		};
-
-		fetchResultImg();
-		storeImageMeta();
+		(async () => {
+			const resultImg = await fetchResultImg(imgId);
+			setResultImg(resultImg);
+		})();
 	}, []);
 
 	return (
