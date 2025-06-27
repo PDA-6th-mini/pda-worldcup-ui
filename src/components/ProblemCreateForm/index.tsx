@@ -2,12 +2,9 @@
 
 import { useCallback, useRef } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { Button, Form } from 'react-bootstrap';
 
 import { useToast } from '@/hooks/useToast';
-import { Response } from '@/types/response';
 import { checkImageDuplicate } from '@/utils/image';
 
 import { Dropzone } from '../Dropzone';
@@ -15,15 +12,14 @@ import { Dropzone } from '../Dropzone';
 interface Props {
 	files: File[];
 	onChangeFiles: (files: File[]) => void;
-	fetchProblem: (formData: FormData) => Promise<Response<string>>;
+	onSubmit: (formData: FormData) => void;
 }
 
 export const ProblemCreateForm = ({
 	files,
 	onChangeFiles,
-	fetchProblem,
+	onSubmit,
 }: Props) => {
-	const router = useRouter();
 	const { handleShowToast } = useToast();
 	const titleRef = useRef<HTMLInputElement>(null);
 	const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -74,14 +70,7 @@ export const ProblemCreateForm = ({
 
 		formData.append('title', title);
 		formData.append('description', description);
-		try {
-			const { status } = await fetchProblem(formData);
-			if (status === 200) {
-				router.push('/');
-			}
-		} catch (e) {
-			console.error(e);
-		}
+		onSubmit(formData);
 	};
 
 	return (
