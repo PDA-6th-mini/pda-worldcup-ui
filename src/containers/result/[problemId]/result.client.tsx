@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-import { useSearchParams } from 'next/navigation';
 import { Img } from '@/types/api/img';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
