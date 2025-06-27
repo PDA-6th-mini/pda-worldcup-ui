@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
-import { fetchResultImg, storeImageMeta } from '@/services/image';
+import { fetchResultImg } from '@/services/image';
 import { fetchRatioData } from '@/services/result';
 import { Img } from '@/types/api/img';
 
@@ -82,10 +82,6 @@ export default function ResultClientContainer({
 	// 1. 결과 저장, 데이터 가져오기
 	useEffect(() => {
 		(async () => {
-			// const { status } = await storeImageMeta(imgId);
-			// if (status !== 'success') {
-			// 	return;
-			// }
 			const { problemName, cntArray, nameArray } =
 				await fetchRatioData(problemId);
 			setProblemName(problemName);

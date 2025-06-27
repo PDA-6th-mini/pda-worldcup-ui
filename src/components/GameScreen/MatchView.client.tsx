@@ -63,7 +63,7 @@ export default function MatchViewClient({
 		else if (match >= 12) setRound('4강');
 		else if (match >= 8) setRound('8강');
 		console.log(queue);
-	}, [match, router]);
+	}, [match, router, handleShowToast]);
 
 	const clickImg = (rl: boolean) => {
 		if (!image1 || !image2 || selected) return;
