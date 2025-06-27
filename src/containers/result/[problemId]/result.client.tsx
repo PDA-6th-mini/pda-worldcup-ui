@@ -102,7 +102,7 @@ export default function ResultClientContainer({
 		fetchRatioData();
 	}, [problemId]);
 
-	// 2. 결과 이미지 가져오기
+	// 2. 결과 이미지 가져오기, 결과 저장
 	useEffect(() => {
 		const fetchResultImg = async () => {
 			if (!imgId) return;
@@ -118,26 +118,19 @@ export default function ResultClientContainer({
 			}
 		};
 
-		fetchResultImg();
-	}, []);
-
-	// 2. 결과 이미지 가져오기
-	useEffect(() => {
-		const fetchResultImg = async () => {
-			if (!imgId) return;
+		const storeImageMeta = async () => {
 			try {
-				const res = await fetch(
-					`http://localhost:3000/api/resultImg?img_id=${imgId}`
-				);
-				const json = await res.json();
-				setResultImg(json.data); // { img_name, img_url }
-				console.log('이미지json', json.data);
-			} catch (err) {
-				console.error('결과 이미지를 불러오는 데 실패했습니다.', err);
+				await fetch(`http://localhost:3000/api/resultSave?img_id=${imgId}`, {
+					method: 'POST',
+				});
+				console.log('✅ 결과 이미지 저장 완료');
+			} catch (error) {
+				console.error('❌ 결과 이미지 저장 실패:', error);
 			}
 		};
 
 		fetchResultImg();
+		storeImageMeta();
 	}, []);
 
 	return (
