@@ -5,8 +5,11 @@ export const fetchRatioData = async (problemId: number) => {
 			`${process.env.NEXT_PUBLIC_API_URL}/api/result-ratio/${problemId}`
 		);
 		const json = await res.json();
-		const problemName = json.data.problem_name;
-		const resultArray = json.data.result;
+
+		const problemName = json.data?.problem_name ?? '';
+		const resultArray = Array.isArray(json.data?.result)
+			? json.data.result
+			: [];
 
 		const cntArray = resultArray.map((item: any) => item.cnt);
 		const nameArray = resultArray.map((item: any) => item.img_name);

@@ -51,7 +51,9 @@ const borderColor = [
 	'rgba(255, 102, 102, 1)',
 ];
 
-export const RankingClientContainer = ({ problemId }: ResultContainerProps) => {
+export default function RankingClientContainer({
+	problemId,
+}: ResultContainerProps) {
 	const [data, setData] = useState<number[]>([]);
 	const [names, setNames] = useState<string[]>([]);
 	const [problemName, setProblemName] = useState('');
@@ -85,12 +87,18 @@ export const RankingClientContainer = ({ problemId }: ResultContainerProps) => {
 			<div style={styles.banner}>
 				<h2>{problemName} 랭킹</h2>
 			</div>
-			<div style={styles.chartWrapper}>
-				<Doughnut data={doughnutData} />
+			<div style={styles.wrapper}>
+				{data.length === 0 ? (
+					<div style={styles.message}>우승 결과가 없습니다.</div>
+				) : (
+					<div style={styles.chartWrapper}>
+						<Doughnut data={doughnutData} />
+					</div>
+				)}
 			</div>
 		</div>
 	);
-};
+}
 
 const styles: {
 	[key: string]: React.CSSProperties;

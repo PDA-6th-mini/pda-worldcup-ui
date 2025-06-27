@@ -1,4 +1,4 @@
-import { RankingClientContainer } from './Ranking.client';
+import RankingClientContainer from './Ranking.client';
 
 interface Props {
 	params: Promise<{

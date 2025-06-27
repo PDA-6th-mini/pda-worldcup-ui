@@ -85,7 +85,7 @@ export const ListCard = ({
 					</Button>
 					<Button
 						variant="outline-primary"
-						onClick={() => router.push('')}
+						onClick={() => router.push(`/ranking/${id}`)}
 						className={styles.btnHover}
 					>
 						랭킹보기
