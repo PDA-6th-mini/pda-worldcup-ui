@@ -11,7 +11,7 @@ export const ToastContainer = ({ children }: Props) => {
 		<BootstrapToastContainer
 			position="bottom-end"
 			className="p-3"
-			style={{ zIndex: 1050 }}
+			style={{ zIndex: 1050, position: 'fixed' }}
 		>
 			{children}
 		</BootstrapToastContainer>
