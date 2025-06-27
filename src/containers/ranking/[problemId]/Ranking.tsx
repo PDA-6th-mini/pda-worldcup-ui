@@ -1,4 +1,4 @@
-import { Doughnut } from '@/components/Doughnut';
+import { Doughnut } from '@/components/wrapped/Doughnut';
 import { chartStyles as styles } from '@/constants/chart';
 import { fetchRatioData } from '@/services/result';
 

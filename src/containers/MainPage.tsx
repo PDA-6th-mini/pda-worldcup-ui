@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
-import { ListCard } from '@/components/MainPageCard';
+import { ListCard } from '@/components/pages/MainPageCard';
 import { getProblemData } from '@/services/problem';
 
 export const MainPageContainer: FC = async () => {

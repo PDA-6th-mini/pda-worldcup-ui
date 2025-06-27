@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import { GoogleAnalytics } from '@/components/ga/GoogleAnalytics';
 import Navbar from '@/components/layouts/Navbar';
-import QueryClientProvider from '@/components/QueryClientProvider';
+import { GoogleAnalytics } from '@/components/service/ga/GoogleAnalytics';
+import QueryClientProvider from '@/components/service/QueryClientProvider';
 import { ToastProvider } from '@/hooks/ToastContext';
 
 import type { Metadata } from 'next';
