@@ -108,7 +108,7 @@ export default function ResultClientContainer({
 			if (!imgId) return;
 			try {
 				const res = await fetch(
-					`http://localhost:3000/api/resultImg?img_id=${imgId}`
+					`${process.env.NEXT_PUBLIC_API_URL}/api/resultImg?img_id=${imgId}`
 				);
 				const json = await res.json();
 				setResultImg(json.data); // { img_name, img_url }
@@ -120,9 +120,12 @@ export default function ResultClientContainer({
 
 		const storeImageMeta = async () => {
 			try {
-				await fetch(`http://localhost:3000/api/resultSave?img_id=${imgId}`, {
-					method: 'POST',
-				});
+				await fetch(
+					`${process.env.NEXT_PUBLIC_API_URL}/api/resultSave?img_id=${imgId}`,
+					{
+						method: 'POST',
+					}
+				);
 				console.log('✅ 결과 이미지 저장 완료');
 			} catch (error) {
 				console.error('❌ 결과 이미지 저장 실패:', error);
