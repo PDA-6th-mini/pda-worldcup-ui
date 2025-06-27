@@ -23,6 +23,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: 'PDA World Cup',
 	description: '프로디지털아카테미 이상형 월드컵',
+	openGraph: {
+		images: ['/og_image.png'],
+	},
 };
 
 export default function RootLayout({
