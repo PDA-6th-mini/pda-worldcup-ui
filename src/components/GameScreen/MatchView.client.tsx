@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 
 import Denque from 'denque';
 import { Container, Row, Col } from 'react-bootstrap';
+
+import { useToast } from '@/hooks/useToast';
 import { storeImageMeta } from '@/services/image';
 import { Img } from '@/types/api/img';
 import { Problem } from '@/types/api/problem';
@@ -17,6 +19,7 @@ export default function MatchViewClient({
 	fetchData: (Img & Problem)[];
 }) {
 	const router = useRouter();
+	const { handleShowToast } = useToast();
 	const [image1, setImage1] = useState<Img>();
 	const [image2, setImage2] = useState<Img>();
 	const [match, setMatch] = useState(0);
@@ -35,14 +38,21 @@ export default function MatchViewClient({
 	}, [fetchData]);
 
 	useEffect(() => {
-		if (match == 15) {
+		if (match === 15) {
 			const { img_id, problem_id } = queue.current.shift()!;
-
-			const status = storeImageMeta(img_id.toString());
-			// if (status !== 'success') {
-			// 	return;
-			// }
-			router.replace(`/result/${problem_id}?img_id=${img_id}`);
+			(async () => {
+				const { status } = await storeImageMeta(img_id.toString());
+				if (status !== 'success') {
+					handleShowToast(
+						'Failed to save result',
+						'결과값 저장에 실패하였습니다',
+						'danger'
+					);
+					router.replace(`/problem/${problem_id}`);
+					return;
+				}
+				router.replace(`/result/${problem_id}?img_id=${img_id}`);
+			})();
 		}
 		if (match === 0) return;
 		setImage1(queue.current.shift());
