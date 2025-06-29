@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { revalidatePageByPath } from '@/actions/revalidate';
 import { ProblemCreateForm } from '@/components/pages/ProblemCreateForm';
 import { Loading } from '@/components/wrapped/Loading';
 import Table from '@/components/wrapped/Table';
@@ -20,13 +21,12 @@ export const ProblemCreateClient = () => {
 		mutationFn: createProblem,
 		onSuccess: async (data) => {
 			if (data.status === 200) {
-				handleShowToast('Success', '문제가 생성되었습니다.', 'success');
-
 				try {
-					await fetch('/api/revalidate/path?path=/&type=page');
+					await revalidatePageByPath('/');
 				} catch (error) {
 					console.error('캐시 무효화 실패:', error);
 				}
+				handleShowToast('Success', '문제가 생성되었습니다.', 'success');
 				router.replace('/');
 			}
 		},
@@ -70,7 +70,7 @@ export const ProblemCreateClient = () => {
 					</Col>
 					<Col md={6}>
 						<div className="border rounded p-3">
-							<h2>문제 미리 보기</h2>
+							<h2>문제 미리 보기 ({files.length})</h2>
 							<Table files={files} onDelete={handleDelete} />
 						</div>
 					</Col>
