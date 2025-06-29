@@ -18,10 +18,16 @@ export const ProblemCreateClient = () => {
 	const { handleShowToast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createProblem,
-		onSuccess: (data) => {
+		onSuccess: async (data) => {
 			if (data.status === 200) {
 				handleShowToast('Success', '문제가 생성되었습니다.', 'success');
-				router.replace(`/`);
+
+				try {
+					await fetch('/api/revalidate/path?path=/&type=page');
+				} catch (error) {
+					console.error('캐시 무효화 실패:', error);
+				}
+				router.replace('/');
 			}
 		},
 		onError: () => {

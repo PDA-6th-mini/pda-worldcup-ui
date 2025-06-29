@@ -19,7 +19,11 @@ export const createProblem = async (formData: FormData) => {
 };
 
 export const getProblemData = async (): Promise<Card[]> => {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/main`);
+	const response = await fetch(`${process.env.API_URL}/api/main`, {
+		next: {
+			revalidate: 3600,
+		},
+	});
 	const responseBody = await response.json();
 
 	const parsed: Card[] = responseBody.data.map((problem: Problem) => {
