@@ -28,7 +28,7 @@ export const ListCard = ({
 	const { handleShowToast } = useToast();
 
 	const shareLink = async (id: number) => {
-		const problemUrl = `${window.location.origin}/${id}`;
+		const problemUrl = `${window.location.origin}/problems/${id}`;
 		try {
 			await navigator.clipboard.writeText(problemUrl);
 			handleShowToast(
