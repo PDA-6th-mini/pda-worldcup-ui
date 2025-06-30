@@ -1,0 +1,39 @@
+.wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 3vh;
+	gap: 5vw;
+	flex-wrap: wrap;
+}
+
+.chartWrapper {
+	width: 40vw;
+	max-width: 500px;
+	aspect-ratio: 1 / 1;
+}
+
+.message {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	font-size: 1.2rem;
+	margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+	.wrapper {
+		flex-direction: column;
+		gap: 4vh;
+		padding: 2vh 0;
+	}
+	.chartWrapper {
+		width: 100vw;
+		min-width: 0;
+		max-width: none;
+		aspect-ratio: 1 / 1;
+		margin: 0 auto;
+	}
+}

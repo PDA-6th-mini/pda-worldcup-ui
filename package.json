@@ -1,27 +1,39 @@
 {
-	"name": "my-next-app",
-	"version": "0.1.0",
+	"name": "pda-worldcup-ui",
+	"version": "1.0.0",
+	"description": "프디아 이상형 월드컵",
+	"author": "Dopamine",
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"lint:fix": "next lint --fix",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"prepare": "husky"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.81.2",
 		"bootstrap": "^5.3.7",
+		"chart.js": "^4.5.0",
+		"denque": "^2.1.0",
+		"lucide-react": "^0.523.0",
 		"next": "15.3.3",
 		"postcss": "^8.5.6",
 		"react": "^19.0.0",
 		"react-bootstrap": "^2.10.10",
+		"react-chartjs-2": "^5.3.0",
 		"react-dom": "^19.0.0",
-		"tailwindcss": "^4.1.10"
+		"react-dropzone": "^14.3.8"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
 		"@eslint/eslintrc": "^3",
-		"@tailwindcss/postcss": "^4.1.10",
+		"@tanstack/react-query-devtools": "^5.81.2",
+		"@types/gtag.js": "^0.0.20",
 		"@types/node": "^20.17.10",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
@@ -31,10 +43,20 @@
 		"eslint-import-resolver-typescript": "^3.7.0",
 		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-prettier": "^5.2.1",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.2",
 		"prettier": "^3.4.2",
 		"stylelint": "^16.12.0",
-		"stylelint-config-tailwindcss": "^1.0.0",
 		"stylelint-order": "^6.0.4",
 		"typescript": "^5"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,css,md}": [
+			"prettier --write"
+		]
 	}
 }

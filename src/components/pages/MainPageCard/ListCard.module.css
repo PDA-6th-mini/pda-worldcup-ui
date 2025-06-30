@@ -1,0 +1,21 @@
+.cardHover {
+	transition: transform 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.cardHover:hover {
+	transform: translateY(-4px);
+}
+
+.btnHover {
+	transition: all 0.2s ease-in-out;
+	background-color: white;
+	color: #0077b6;
+	border-color: #0077b6;
+	font-weight: 500;
+}
+
+.btnHover:hover {
+	background-color: #0077b6;
+	color: white;
+}
