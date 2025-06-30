@@ -19,6 +19,7 @@ export const createProblem = async (formData: FormData) => {
 };
 
 export const getProblemData = async (
+	cached = false,
 	cursor?: Cursor
 ): Promise<{ data: Card[]; nextCursor: Cursor | null }> => {
 	const params = new URLSearchParams();
@@ -31,9 +32,11 @@ export const getProblemData = async (
 		`${process.env.NEXT_PUBLIC_API_URL}/api/main?${params.toString()}`,
 		{
 			method: 'GET',
-			next: {
-				revalidate: 60 * 60,
-			},
+			next: cached
+				? {
+						revalidate: 60,
+					}
+				: undefined,
 		}
 	);
 
