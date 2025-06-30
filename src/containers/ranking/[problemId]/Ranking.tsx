@@ -9,7 +9,8 @@ interface Props {
 }
 export const RankingContainer = async ({ params }: Props) => {
 	const { problemId } = await params;
-	const { problemName, cntArray, nameArray } = await fetchRatioData(problemId);
+	const { problemName, cntArray, nameArray, urls } =
+		await fetchRatioData(problemId);
 	return (
 		<div>
 			{/* 문제 이름 배너 */}
@@ -25,6 +26,7 @@ export const RankingContainer = async ({ params }: Props) => {
 							problemName={problemName}
 							cntArray={cntArray}
 							nameArray={nameArray}
+							urls={urls}
 						/>
 					</div>
 				)}
