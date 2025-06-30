@@ -15,9 +15,11 @@ export const RankingContainer = async ({ params }: Props) => {
 	return (
 		<div>
 			{/* 문제 이름 배너 */}
-			<div className={styles.banner}>
-				<h2 style={{ padding: '1rem' }}>{problemName} 랭킹</h2>
-			</div>
+			{cntArray.length !== 0 && (
+				<div className={styles.banner}>
+					<h2 style={{ padding: '1rem' }}>{problemName} 랭킹</h2>
+				</div>
+			)}
 			<div className={styles.wrapper}>
 				{cntArray.length === 0 ? (
 					<div className={styles.message}>우승 결과가 없습니다.</div>

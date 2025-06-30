@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { revalidatePageByPath } from '@/actions/revalidate';
@@ -16,6 +16,7 @@ import { createProblem } from '@/services/problem';
 
 export const ProblemCreateClient = () => {
 	const router = useRouter();
+	const queryClient = useQueryClient();
 	const { handleShowToast } = useToast();
 	const { mutate, isPending } = useMutation({
 		mutationFn: createProblem,
@@ -23,6 +24,7 @@ export const ProblemCreateClient = () => {
 			if (data.status === 200) {
 				try {
 					await revalidatePageByPath('/');
+					queryClient.invalidateQueries({ queryKey: ['mainProblems'] });
 				} catch (error) {
 					console.error('캐시 무효화 실패:', error);
 				}
