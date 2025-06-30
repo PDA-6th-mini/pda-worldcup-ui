@@ -24,27 +24,18 @@ export const getProblemData = async (
 	const params = new URLSearchParams();
 
 	if (cursor) {
-		params.append(
-			'cursor_total_count',
-			String(cursor.cursor_total_count ?? '')
-		);
-		params.append('cursor_count', String(cursor.cursor_count ?? ''));
-		params.append('cursor_img_id', String(cursor.cursor_img_id ?? ''));
+		params.append('cursor_problem_id', String(cursor.cursor_problem_id ?? ''));
 	}
 
-	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/api/main?${params.toString()}`,
-		{
-			method: 'GET',
-		}
-	);
+	const response = await fetch(`/api/main?${params.toString()}`, {
+		method: 'GET',
+	});
 
 	if (!response.ok) {
 		throw new Error('문제 데이터를 불러오는 데 실패했습니다.');
 	}
 
 	const res = await response.json();
-
 	const problemList = res.data.data;
 
 	const parsed: Card[] = problemList.map((problem: any) => ({
@@ -55,13 +46,11 @@ export const getProblemData = async (
 		thumbNail_2: problem.images[1]?.img_url,
 	}));
 
-	const last = problemList.at(-1);
+	const last = res.data.nextCursor;
 
 	const nextCursor: Cursor | null = last
 		? {
-				cursor_total_count: last.total_count,
-				cursor_count: last.count,
-				cursor_img_id: last.img_id,
+				cursor_problem_id: last.cursor_problem_id,
 			}
 		: null;
 
