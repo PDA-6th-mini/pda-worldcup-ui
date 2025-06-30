@@ -2,8 +2,8 @@
 
 import { createContext, useState } from 'react';
 
-import { Toast } from '@/components/Toast';
-import { ToastContainer } from '@/components/Toast/ToastContainer';
+import { Toast } from '@/components/wrapped/Toast';
+import { ToastContainer } from '@/components/wrapped/Toast/ToastContainer';
 import { ToastType } from '@/types/toast';
 
 interface ToastContextType {

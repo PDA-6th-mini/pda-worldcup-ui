@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Card, Button, ButtonGroup } from 'react-bootstrap';
+import { Card, Button, ButtonGroup, OverlayTrigger } from 'react-bootstrap';
 
+import Tooltip from '@/components/wrapped/Tooltip';
 import { useToast } from '@/hooks/useToast';
 
 import styles from './ListCard.module.css';
@@ -27,7 +28,7 @@ export const ListCard = ({
 	const { handleShowToast } = useToast();
 
 	const shareLink = async (id: number) => {
-		const problemUrl = `${window.location.origin}/${id}`;
+		const problemUrl = `${window.location.origin}/problems/${id}`;
 		try {
 			await navigator.clipboard.writeText(problemUrl);
 			handleShowToast(
@@ -53,6 +54,7 @@ export const ListCard = ({
 				border: 'none',
 			}}
 			className={styles.cardHover}
+			onClick={() => router.push(`/problems/${id}`)}
 		>
 			<div style={{ display: 'flex', width: '100%' }}>
 				<Card.Img
@@ -69,30 +71,55 @@ export const ListCard = ({
 				/>
 			</div>
 			<Card.Body style={{ padding: '1rem' }}>
-				<Card.Title style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+				<Card.Title
+					style={{ fontSize: '1.25rem', fontWeight: 600, height: '3rem' }}
+				>
 					{title}
 				</Card.Title>
-				<Card.Text style={{ fontSize: '0.95rem', color: '#495057' }}>
-					{description}
-				</Card.Text>
+				<OverlayTrigger
+					placement="top-start"
+					overlay={<Tooltip message={description ?? ''} />}
+				>
+					<Card.Text
+						style={{
+							fontSize: '0.95rem',
+							color: '#495057',
+							height: '1.5rem',
+							textOverflow: 'ellipsis',
+							overflow: 'hidden',
+							whiteSpace: 'nowrap',
+						}}
+					>
+						{description}
+					</Card.Text>
+				</OverlayTrigger>
 				<ButtonGroup className="w-100 mt-2 d-flex justify-content-between">
-					<Button
+					{/* <Button
 						variant="outline-primary"
-						onClick={() => router.push(`/${id}`)}
 						className={styles.btnHover}
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(`/problems/${id}`);
+						}}
 					>
 						시작하기
-					</Button>
+					</Button> */}
 					<Button
 						variant="outline-primary"
-						onClick={() => router.push(`/ranking/${id}`)}
 						className={styles.btnHover}
+						onClick={(e) => {
+							e.stopPropagation();
+							router.push(`/ranking/${id}`);
+						}}
 					>
 						랭킹보기
 					</Button>
 					<Button
 						variant="outline-primary"
-						onClick={() => shareLink(id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							shareLink(id);
+						}}
 						className={styles.btnHover}
 					>
 						공유하기

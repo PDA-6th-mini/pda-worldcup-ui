@@ -22,7 +22,7 @@ export default function NavBarClient() {
 	return (
 		<>
 			{['lg'].map((expand) => (
-				<Navbar key={expand} expand={expand} className="bg-body-tertiary m-1">
+				<Navbar key={expand} expand={expand} className="bg-body-tertiary">
 					<Container fluid>
 						<Navbar.Brand
 							style={{ paddingLeft: '4em', paddingRight: '4em' }}

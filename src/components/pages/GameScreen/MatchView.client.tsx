@@ -49,7 +49,7 @@ export default function MatchViewClient({
 						'결과값 저장에 실패하였습니다',
 						'danger'
 					);
-					router.replace(`/problem/${problem_id}`);
+					router.replace(`/problems/${problem_id}`);
 					return;
 				}
 				router.replace(`/result/${problem_id}?img_id=${img_id}`);

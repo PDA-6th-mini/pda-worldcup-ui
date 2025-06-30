@@ -13,10 +13,11 @@ export const fetchRatioData = async (problemId: number) => {
 
 		const cntArray = resultArray.map((item: any) => item.cnt);
 		const nameArray = resultArray.map((item: any) => item.img_name);
+		const urls = resultArray.map((item: any) => item.img_url);
 
-		return { problemName, cntArray, nameArray };
+		return { problemName, cntArray, nameArray, urls };
 	} catch (err) {
 		console.error('도넛 차트 데이터를 불러오는 데 실패했습니다.', err);
-		return { problemName: '', cntArray: [], nameArray: [] };
+		return { problemName: '', cntArray: [], nameArray: [], urls: [] };
 	}
 };
