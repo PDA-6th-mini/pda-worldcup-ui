@@ -1,12 +1,13 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut as DoughnutComponent } from 'react-chartjs-2';
 
 import { backgroundColor, borderColor } from '@/constants/chart';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
 interface Props {
 	problemName: string;
 	cntArray: number[];
@@ -14,14 +15,13 @@ interface Props {
 	urls: string[];
 }
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
 export const Doughnut: FC<Props> = ({
 	problemName,
 	cntArray,
 	nameArray,
 	urls,
 }) => {
+	//const tooltipRef = useRef(null);
 	const doughnutData = {
 		labels: nameArray, // 각 이미지 이름 배열
 		datasets: [
@@ -34,15 +34,22 @@ export const Doughnut: FC<Props> = ({
 			},
 		],
 	};
+	useEffect(() => {
+		return () => {
+			const tooltip = document.getElementById('chartjs-tooltip');
+			if (tooltip) tooltip.remove();
+		};
+	}, []);
 
 	const getChartOptions = (urls: string[]) => ({
 		plugins: {
 			tooltip: {
 				enabled: false,
-				external: function (context: any) {
+				external: function (context: { chart: ChartJS; tooltip: any }) {
 					const tooltipModel = context.tooltip;
 					let tooltipEl = document.getElementById('chartjs-tooltip');
 
+					// 툴팁 DOM 요소가 없으면 생성
 					if (!tooltipEl) {
 						tooltipEl = document.createElement('div');
 						tooltipEl.id = 'chartjs-tooltip';
@@ -53,22 +60,35 @@ export const Doughnut: FC<Props> = ({
 						document.body.appendChild(tooltipEl);
 					}
 
+					// 툴팁이 사라졌을 때
 					if (tooltipModel.opacity === 0) {
 						tooltipEl.style.opacity = '0';
 						return;
 					}
 
-					const index = tooltipModel.dataPoints?.[0]?.dataIndex;
-					const label = tooltipModel.dataPoints?.[0]?.label;
+					const dataPoint = tooltipModel.dataPoints?.[0];
+					if (!dataPoint) return;
+
+					const index = dataPoint.dataIndex;
+					const label = dataPoint.label;
 					const imageUrl = urls[index];
 
+					// 툴팁 콘텐츠 구성
 					tooltipEl.innerHTML = `
-						<div style="background: white; border: 1px solid #ccc; border-radius: 8px; padding: 8px;">
-							<strong>${label}</strong><br/>
-							<img src="${imageUrl}" width="100" height="100" style="object-fit: cover; border-radius: 4px;" />
-						</div>
-					`;
+				<div style="
+				  background: white;
+				  border: 1px solid #ccc;
+				  border-radius: 8px;
+				  padding: 8px;
+				  box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+				">
+				  <strong>${label}</strong><br/>
+				  <img src="${imageUrl}" width="100" height="100"
+					style="object-fit: cover; border-radius: 4px;" />
+				</div>
+			  `;
 
+					// 툴팁 위치 지정
 					const canvas = context.chart.canvas;
 					const rect = canvas.getBoundingClientRect();
 					tooltipEl.style.opacity = '1';
