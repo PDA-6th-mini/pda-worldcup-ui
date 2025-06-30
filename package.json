@@ -1,6 +1,8 @@
 {
-	"name": "my-next-app",
-	"version": "0.1.0",
+	"name": "pda-worldcup-ui",
+	"version": "1.0.0",
+	"description": "프디아 이상형 월드컵",
+	"author": "Dopamine",
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
