@@ -29,12 +29,15 @@ export default function MatchViewClient({
 	const queue = useRef(new Denque<Img>());
 
 	useEffect(() => {
+		preloadImages();
+	}, []);
+
+	useEffect(() => {
 		fetchData.forEach((data) => {
 			queue.current.push(data);
 		});
 		setImage1(queue.current.shift());
 		setImage2(queue.current.shift());
-		console.log(queue);
 	}, [fetchData]);
 
 	useEffect(() => {
@@ -65,6 +68,20 @@ export default function MatchViewClient({
 		else if (match >= 12) setRound('4강');
 		else if (match >= 8) setRound('8강');
 	}, [match, router, handleShowToast]);
+
+	const preloadImages = () => {
+		Promise.all(
+			fetchData.map((imagePath) => {
+				return new Promise((resolve, reject) => {
+					const img = new window.Image();
+
+					img.src = imagePath.img_url;
+					img.onload = resolve; // 이미지 로드 성공 시 resolve 호출
+					img.onerror = reject; // 이미지 로드 실패 시 reject 호출
+				});
+			})
+		);
+	};
 
 	const clickImg = (rl: boolean) => {
 		if (!image1 || !image2 || selected) return;
