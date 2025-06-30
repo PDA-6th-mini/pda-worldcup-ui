@@ -1,5 +1,5 @@
 import { Card } from '@/types/card';
-import { Problem } from '@/types/problem';
+import { Cursor } from '@/types/cursor';
 
 export const createProblem = async (formData: FormData) => {
 	const response = await fetch(
@@ -18,25 +18,52 @@ export const createProblem = async (formData: FormData) => {
 	return data;
 };
 
-export const getProblemData = async (): Promise<Card[]> => {
-	const response = await fetch(`${process.env.API_URL}/api/main`, {
-		next: {
-			revalidate: 3600,
-		},
-	});
-	const responseBody = await response.json();
+export const getProblemData = async (
+	cursor?: Cursor
+): Promise<{ data: Card[]; nextCursor: Cursor | null }> => {
+	const params = new URLSearchParams();
 
-	const parsed: Card[] = responseBody.data.map((problem: Problem) => {
-		const images = problem.images;
+	if (cursor) {
+		params.append(
+			'cursor_total_count',
+			String(cursor.cursor_total_count ?? '')
+		);
+		params.append('cursor_count', String(cursor.cursor_count ?? ''));
+		params.append('cursor_img_id', String(cursor.cursor_img_id ?? ''));
+	}
 
-		const data: Card = {
-			id: problem.problem_id,
-			title: problem.name,
-			description: problem.description,
-			thumbNail_1: images[0].img_url,
-			thumbNail_2: images[1].img_url,
-		};
-		return data;
+	const response = await fetch(`/api/main?${params.toString()}`, {
+		method: 'GET',
 	});
-	return parsed;
+
+	if (!response.ok) {
+		throw new Error('문제 데이터를 불러오는 데 실패했습니다.');
+	}
+
+	const res = await response.json();
+
+	const problemList = res.data.data;
+
+	const parsed: Card[] = problemList.map((problem: any) => ({
+		id: problem.problem_id,
+		title: problem.name,
+		description: problem.description,
+		thumbNail_1: problem.images[0]?.img_url,
+		thumbNail_2: problem.images[1]?.img_url,
+	}));
+
+	const last = problemList.at(-1);
+
+	const nextCursor: Cursor | null = last
+		? {
+				cursor_total_count: last.total_count,
+				cursor_count: last.count,
+				cursor_img_id: last.img_id,
+			}
+		: null;
+
+	return {
+		data: parsed,
+		nextCursor,
+	};
 };
