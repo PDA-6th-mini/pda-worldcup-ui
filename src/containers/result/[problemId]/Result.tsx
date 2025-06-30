@@ -16,7 +16,8 @@ const ResultContainer = async ({ params, searchParams }: Props) => {
 	const { problemId } = await params;
 	const { img_id } = await searchParams;
 	const resultImg = await fetchResultImg(img_id);
-	const { problemName, cntArray, nameArray } = await fetchRatioData(problemId);
+	const { problemName, cntArray, nameArray, urls } =
+		await fetchRatioData(problemId);
 
 	return (
 		<div>
@@ -43,6 +44,7 @@ const ResultContainer = async ({ params, searchParams }: Props) => {
 						problemName={problemName}
 						cntArray={cntArray}
 						nameArray={nameArray}
+						urls={urls}
 					/>
 				</div>
 			</div>
