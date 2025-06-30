@@ -31,6 +31,9 @@ export const getProblemData = async (
 		`${process.env.NEXT_PUBLIC_API_URL}/api/main?${params.toString()}`,
 		{
 			method: 'GET',
+			next: {
+				revalidate: 60 * 60 * 24,
+			},
 		}
 	);
 
