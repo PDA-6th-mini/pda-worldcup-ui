@@ -1,7 +1,9 @@
 import { Doughnut } from '@/components/wrapped/Doughnut';
-import { chartStyles as styles } from '@/constants/chart';
+import { chartStyles } from '@/constants/chart';
 import { fetchResultImg } from '@/services/image';
 import { fetchRatioData } from '@/services/result';
+
+import styles from './Result.module.css';
 
 interface Props {
 	params: Promise<{
@@ -22,24 +24,24 @@ const ResultContainer = async ({ params, searchParams }: Props) => {
 	return (
 		<div>
 			{/* 문제 이름 배너 */}
-			<div style={styles.banner}>
+			<div style={chartStyles.banner}>
 				<h2>{problemName} 우승</h2>
 			</div>
 
-			<div style={styles.wrapper}>
-				<div style={styles.imageWrapper}>
-					<div style={styles.imageContainer}>
+			<div className={styles.wrapper}>
+				<div className={styles.imageWrapper}>
+					<div style={chartStyles.imageContainer}>
 						<img
 							src={resultImg?.img_url}
 							alt="1등 이미지"
-							style={styles.image}
+							style={chartStyles.image}
 						/>
-						<div style={styles.overlayText}>
+						<div style={chartStyles.overlayText}>
 							{resultImg?.img_name ?? '결과 이미지'}
 						</div>
 					</div>
 				</div>
-				<div style={styles.chartWrapper}>
+				<div className={styles.chartWrapper}>
 					<Doughnut
 						problemName={problemName}
 						cntArray={cntArray}
