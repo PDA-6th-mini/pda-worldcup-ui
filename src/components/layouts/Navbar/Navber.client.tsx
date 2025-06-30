@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import Link from 'next/link';
 
 import Container from 'react-bootstrap/Container';
@@ -19,6 +21,12 @@ const navItems = [
 ];
 
 export default function NavBarClient() {
+	const [showOffcanvas, setShowOffcanvas] = useState(false);
+
+	const handleNavItemClick = () => {
+		setShowOffcanvas(false);
+	};
+
 	return (
 		<>
 			{['lg'].map((expand) => (
@@ -30,11 +38,16 @@ export default function NavBarClient() {
 						>
 							도파민
 						</Navbar.Brand>
-						<Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+						<Navbar.Toggle
+							aria-controls={`offcanvasNavbar-expand-${expand}`}
+							onClick={() => setShowOffcanvas(true)}
+						/>
 						<Navbar.Offcanvas
 							id={`offcanvasNavbar-expand-${expand}`}
 							aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
 							placement="end"
+							show={showOffcanvas}
+							onHide={() => setShowOffcanvas(false)}
 						>
 							<Offcanvas.Header closeButton>
 								<Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
@@ -49,6 +62,7 @@ export default function NavBarClient() {
 												key={item.url}
 												href={item.url}
 												style={{ textDecoration: 'none' }}
+												onClick={handleNavItemClick}
 											>
 												<Nav.Link as="div" className="text-black">
 													{item.title}

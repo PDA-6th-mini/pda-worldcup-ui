@@ -54,7 +54,7 @@ export const ProblemCreateClient = () => {
 
 	return (
 		<div className="d-flex justify-content-center h-100">
-			<Container fluid className="m-5 h-full">
+			<Container fluid className="mt-4 h-full">
 				<Row className="m-2">
 					<Col>
 						<h1>이상형 월드컵 만들기</h1>
