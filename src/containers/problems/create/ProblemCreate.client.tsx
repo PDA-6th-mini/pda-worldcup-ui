@@ -81,7 +81,11 @@ export const ProblemCreateClient = () => {
 						<div className="rounded shadow-sm p-4 h-100">
 							<div className="d-flex justify-content-between align-items-center mb-3">
 								<h2 className="mb-0">문제 미리 보기</h2>
-								<span className="badge bg-primary fs-6">{files.length}/16</span>
+								<span
+									className={`badge fs-6 ${files.length === 16 ? 'bg-primary' : 'bg-danger'}`}
+								>
+									{files.length}/16
+								</span>
 							</div>
 
 							{/* 모바일에서는 간단한 카드 형태, 데스크탑에서는 테이블 */}
