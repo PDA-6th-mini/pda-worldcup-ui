@@ -1,6 +1,7 @@
 import { Doughnut } from '@/components/wrapped/Doughnut';
-import { chartStyles as styles } from '@/constants/chart';
 import { fetchRatioData } from '@/services/result';
+
+import styles from './Ranking.module.css';
 
 interface Props {
 	params: Promise<{
@@ -14,14 +15,14 @@ export const RankingContainer = async ({ params }: Props) => {
 	return (
 		<div>
 			{/* 문제 이름 배너 */}
-			<div style={styles.banner}>
-				<h2>{problemName} 랭킹</h2>
+			<div className={styles.banner}>
+				<h2 style={{ padding: '1rem' }}>{problemName} 랭킹</h2>
 			</div>
-			<div style={styles.wrapper}>
+			<div className={styles.wrapper}>
 				{cntArray.length === 0 ? (
-					<div style={styles.message}>우승 결과가 없습니다.</div>
+					<div className={styles.message}>우승 결과가 없습니다.</div>
 				) : (
-					<div style={styles.chartWrapper}>
+					<div className={styles.chartWrapper}>
 						<Doughnut
 							problemName={problemName}
 							cntArray={cntArray}
