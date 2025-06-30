@@ -32,10 +32,12 @@ export default function NavBarClient() {
 			{['lg'].map((expand) => (
 				<Navbar key={expand} expand={expand} className="bg-body-tertiary">
 					<Container fluid>
-						<Navbar.Brand
-							style={{ paddingLeft: '4em', paddingRight: '4em' }}
-							href="/"
-						>
+						{/* 데스크탑 네비게이션 바 */}
+						<Navbar.Brand className="d-none d-lg-block p-4 pt-0 pb-0" href="/">
+							도파민
+						</Navbar.Brand>
+						{/*모바일 네비게이션 바*/}
+						<Navbar.Brand className="d-lg-none p-1" href="/">
 							도파민
 						</Navbar.Brand>
 						<Navbar.Toggle
