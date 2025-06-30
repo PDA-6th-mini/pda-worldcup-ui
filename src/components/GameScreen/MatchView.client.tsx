@@ -38,6 +38,7 @@ export default function MatchViewClient({
 	}, [fetchData]);
 
 	useEffect(() => {
+		if (match === 0) return;
 		if (match === 15) {
 			const { img_id, problem_id } = queue.current.shift()!;
 			(async () => {
@@ -54,15 +55,15 @@ export default function MatchViewClient({
 				router.replace(`/result/${problem_id}?img_id=${img_id}`);
 			})();
 		}
-		if (match === 0) return;
+
 		setImage1(queue.current.shift());
 		setImage2(queue.current.shift());
 		if (match === 14 || match === 12 || match === 8)
 			setRoundMatch((prev) => prev / 2);
+
 		if (match >= 14) setRound('결승');
 		else if (match >= 12) setRound('4강');
 		else if (match >= 8) setRound('8강');
-		console.log(queue);
 	}, [match, router, handleShowToast]);
 
 	const clickImg = (rl: boolean) => {
@@ -98,6 +99,19 @@ export default function MatchViewClient({
 				.disappear {
 					opacity: 0;
 				}
+
+				/* 모바일 반응형 스타일 */
+				@media (max-width: 768px) {
+					.match-image {
+						width: 100% !important;
+						max-width: 350px !important;
+						height: 250px !important;
+					}
+
+					.vs-text {
+						margin: 20px 0;
+					}
+				}
 			`}</style>
 
 			<Container className="text-white text-center m-0">
@@ -105,7 +119,7 @@ export default function MatchViewClient({
 					{round}&nbsp;&nbsp;{(match % roundMatch) + 1}/{roundMatch}
 				</h2>
 				<Row className="align-items-center justify-content-center">
-					<Col xs={5} className="d-flex flex-column align-items-center">
+					<Col md={5} xs={12} className="d-flex flex-column align-items-center">
 						<div
 							className={`match-image ${selected === 'left' ? 'selected' : ''} ${
 								selected === 'right' ? 'disappear' : ''
@@ -117,8 +131,8 @@ export default function MatchViewClient({
 								src={image1.img_url}
 								alt={image1.img_name}
 								fill
-								style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
-								className="shadow"
+								style={{ objectFit: 'contain', borderRadius: '0.5rem' }}
+								className="shadow border"
 							/>
 						</div>
 						<br />
@@ -132,13 +146,14 @@ export default function MatchViewClient({
 					</Col>
 
 					<Col
-						xs={2}
+						md={2}
+						xs={12}
 						className="d-flex justify-content-center align-items-center"
 					>
 						<span className="text-warning fs-2 fw-bold">VS</span>
 					</Col>
 
-					<Col xs={5} className="d-flex flex-column align-items-center">
+					<Col md={5} xs={12} className="d-flex flex-column align-items-center">
 						<div
 							className={`match-image ${selected === 'right' ? 'selected' : ''} ${
 								selected === 'left' ? 'disappear' : ''
@@ -150,8 +165,8 @@ export default function MatchViewClient({
 								src={image2.img_url}
 								alt={image2.img_name}
 								fill
-								style={{ objectFit: 'cover', borderRadius: '0.5rem' }}
-								className="shadow"
+								style={{ objectFit: 'contain', borderRadius: '0.5rem' }}
+								className="shadow border	"
 							/>
 						</div>
 						<br />
