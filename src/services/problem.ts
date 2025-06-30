@@ -24,12 +24,7 @@ export const getProblemData = async (
 	const params = new URLSearchParams();
 
 	if (cursor) {
-		params.append(
-			'cursor_total_count',
-			String(cursor.cursor_total_count ?? '')
-		);
-		params.append('cursor_count', String(cursor.cursor_count ?? ''));
-		params.append('cursor_img_id', String(cursor.cursor_img_id ?? ''));
+		params.append('cursor_problem_id', String(cursor.cursor_problem_id ?? ''));
 	}
 
 	const response = await fetch(
@@ -44,7 +39,6 @@ export const getProblemData = async (
 	}
 
 	const res = await response.json();
-
 	const problemList = res.data.data;
 
 	const parsed: Card[] = problemList.map((problem: any) => ({
@@ -55,13 +49,11 @@ export const getProblemData = async (
 		thumbNail_2: problem.images[1]?.img_url,
 	}));
 
-	const last = problemList.at(-1);
+	const last = res.data.nextCursor;
 
 	const nextCursor: Cursor | null = last
 		? {
-				cursor_total_count: last.total_count,
-				cursor_count: last.count,
-				cursor_img_id: last.img_id,
+				cursor_problem_id: last.cursor_problem_id,
 			}
 		: null;
 
